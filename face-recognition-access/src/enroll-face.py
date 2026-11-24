@@ -10,7 +10,7 @@ from pathlib import Path
 # CONFIG
 # ============================================================
 
-ESP32_IP = "192.168.0.109"
+ESP32_IP = "192.x.x.x" #Webserver IP goes here.
 CAPTURE_URL = f"http://{ESP32_IP}/capture"
 
 DETECTOR_MODEL = Path("models/face_detection_yunet_2023mar.onnx")
