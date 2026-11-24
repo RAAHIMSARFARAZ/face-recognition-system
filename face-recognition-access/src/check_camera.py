@@ -8,7 +8,7 @@ import os
 # ESP32-CAM
 # ============================================================
 
-ESP32_IP = "192.168.0.115"   # set your board IP
+ESP32_IP = "192.x.x.x" #Webserver IP goes here.
 URL = f"http://{ESP32_IP}/capture"
 
 
