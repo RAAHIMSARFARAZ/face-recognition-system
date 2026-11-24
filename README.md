@@ -85,13 +85,24 @@ happens on the score, so an impostor never reaches the employee table.
 - **The camera IP is hardcoded.** mDNS (`esp32cam.local`) or a config file
   would remove a common failure mode.
 
-## Not included
+## Firmware
 
-The Arduino sketch flashed to the board is not in this repo - it was lost with
-the project laptop. It was a stock `CameraWebServer`-style example extended with
-two endpoints: `GET /capture`, returning a single JPEG, and
-`GET /led/on|off`, driving the onboard flash LED on GPIO 4. It streams over
-WiFi; the laptop does all the recognition.
+`firmware/ESP32CAM_Server.ino` is the sketch flashed to the board. It does four
+things and nothing else:
+
+- `GET /` - a small status page: live preview, plus LED ON / LED OFF buttons
+- `GET /capture` - grabs one frame and returns it as JPEG, with no-cache headers
+- `GET /led/on` - drives GPIO 4 high
+- `GET /led/off` - drives GPIO 4 low
+
+The preview page refreshes `/capture` every 250 ms, which is how the laptop's
+frame loop was fed during testing.
+
+Two details that came out of the hardware rather than from a tutorial. The board
+has **no PSRAM**, so the config is pinned to `FRAMESIZE_HQVGA`, JPEG quality 15,
+a single frame buffer in DRAM and `CAMERA_GRAB_WHEN_EMPTY`; the usual VGA +
+PSRAM settings simply fail `esp_camera_init` on this module. And `ssid` /
+`password` at the top are placeholders - set them before flashing.
 
 ## Known rough edges
 
